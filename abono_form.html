@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscripción Abono – Ace Sport Club 2026</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 10pt;
+            color: #000;
+            background: #f0f0f0;
+            padding: 20px;
+        }
+
+        /* Screen wrapper with print button */
+        .screen-controls {
+            max-width: 800px;
+            margin: 0 auto 16px auto;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .btn-print {
+            background: #22c55e;
+            color: #fff;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .btn-print:hover { background: #16a34a; transform: scale(1.03); }
+        .btn-back {
+            color: #16a34a;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .btn-back:hover { text-decoration: underline; }
+
+        /* The A4 page */
+        .page {
+            background: #fff;
+            max-width: 800px;
+            margin: 0 auto 30px auto;
+            padding: 40px 50px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+        }
+
+        /* ---- Page 1 ---- */
+        .form-title {
+            background: #1e3a5f;
+            color: #fff;
+            text-align: center;
+            font-size: 17pt;
+            font-weight: bold;
+            padding: 12px 10px;
+            margin-bottom: 18px;
+        }
+
+        .section-header {
+            background: #555;
+            color: #fff;
+            font-weight: bold;
+            font-size: 9.5pt;
+            padding: 4px 8px;
+            margin-bottom: 0;
+        }
+
+        table.form-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 14px;
+        }
+        table.form-table td {
+            border: 1px solid #999;
+            padding: 4px 6px;
+            font-size: 9.5pt;
+            vertical-align: middle;
+        }
+        table.form-table td.label {
+            background: #eee;
+            font-weight: bold;
+            white-space: nowrap;
+            width: 1%;
+        }
+        table.form-table td.fill {
+            background: #fff;
+            min-width: 80px;
+        }
+
+        /* Family table */
+        table.family-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 14px;
+        }
+        table.family-table th {
+            background: #eee;
+            border: 1px solid #999;
+            padding: 4px 6px;
+            font-size: 9.5pt;
+            font-weight: bold;
+            text-align: left;
+        }
+        table.family-table td {
+            border: 1px solid #999;
+            padding: 5px 6px;
+            height: 22px;
+        }
+
+        /* Bank data */
+        .bank-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 6px;
+            font-size: 9.5pt;
+        }
+        .bank-box {
+            border: 1px solid #999;
+            display: inline-block;
+            padding: 3px 5px;
+            min-width: 22px;
+            text-align: center;
+            background: #fff;
+        }
+        .bank-label { font-weight: bold; white-space: nowrap; }
+        .bank-fill {
+            border: 1px solid #999;
+            flex-grow: 1;
+            height: 22px;
+            background: #fff;
+        }
+        .bank-fill-sm {
+            border: 1px solid #999;
+            width: 45px;
+            height: 22px;
+            background: #fff;
+        }
+
+        /* Abono type checkboxes */
+        .abono-section { margin-bottom: 14px; }
+        .abono-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            font-size: 9.5pt;
+        }
+        .abono-row input[type=checkbox] { margin-right: 8px; flex-shrink: 0; width: 14px; height: 14px; }
+        .abono-name { flex-grow: 1; }
+        .abono-price {
+            border: 1px solid #999;
+            padding: 1px 8px;
+            font-weight: bold;
+            white-space: nowrap;
+            min-width: 45px;
+            text-align: right;
+        }
+
+        .familiar-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 6px;
+            margin-bottom: 10px;
+        }
+        .familiar-tag {
+            border: 1px solid #555;
+            padding: 2px 8px;
+            font-size: 9pt;
+            font-weight: bold;
+        }
+
+        .bullet-list { list-style: disc; margin-left: 20px; font-size: 9pt; margin-bottom: 8px; }
+        .bullet-list li { margin-bottom: 3px; }
+
+        /* ---- Page 2 ---- */
+        .page2-bullet {
+            font-size: 9.5pt;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+        }
+        .checkbox-sq {
+            width: 14px;
+            height: 14px;
+            border: 1px solid #555;
+            display: inline-block;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .legal-section-title { font-weight: bold; font-size: 9.5pt; margin: 12px 0 6px; }
+        .legal-text { font-size: 8.5pt; text-align: justify; margin-bottom: 8px; line-height: 1.45; }
+
+        .tratamiento-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 9pt;
+            margin-bottom: 5px;
+        }
+
+        .firma-line {
+            margin-top: 30px;
+            display: flex;
+            align-items: flex-end;
+            gap: 20px;
+            font-size: 9.5pt;
+        }
+        .firma-blank {
+            border-bottom: 1px solid #000;
+            flex-grow: 1;
+            height: 30px;
+        }
+
+        /* Print styles */
+        @media print {
+            body { background: #fff; padding: 0; }
+            .screen-controls { display: none; }
+            .page {
+                box-shadow: none;
+                max-width: 100%;
+                padding: 20px 25px;
+                page-break-after: always;
+            }
+            .page:last-child { page-break-after: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Print / Back buttons (hidden on print) -->
+    <div class="screen-controls">
+        <button class="btn-print" onclick="window.print()">
+            🖨️ Imprimir / Guardar como PDF
+        </button>
+        <a class="btn-back" href="memberships.html">← Volver</a>
+    </div>
+
+    <!-- =================== PAGE 1 =================== -->
+    <div class="page">
+        <div class="form-title">Inscripción Abono l'Espiral 2026</div>
+
+        <!-- DATOS PERSONALES -->
+        <div class="section-header">DATOS PERSONALES</div>
+        <table class="form-table">
+            <tr>
+                <td class="label">Nombre</td>
+                <td class="fill" colspan="3"></td>
+            </tr>
+            <tr>
+                <td class="label">Apellidos</td>
+                <td class="fill" colspan="3"></td>
+            </tr>
+            <tr>
+                <td class="label">Fecha Nacimiento</td>
+                <td class="fill"></td>
+                <td class="label">NIF</td>
+                <td class="fill"></td>
+            </tr>
+            <tr>
+                <td class="label">Dirección</td>
+                <td class="fill" colspan="3"></td>
+            </tr>
+            <tr>
+                <td class="label">Población</td>
+                <td class="fill"></td>
+                <td class="label">Código Postal</td>
+                <td class="fill"></td>
+            </tr>
+            <tr>
+                <td class="label">Provincia</td>
+                <td class="fill" colspan="3"></td>
+            </tr>
+            <tr>
+                <td class="label">Teléfono</td>
+                <td class="fill"></td>
+                <td class="label">Móvil</td>
+                <td class="fill"></td>
+            </tr>
+            <tr>
+                <td class="label">E-mail</td>
+                <td class="fill" colspan="3"></td>
+            </tr>
+        </table>
+
+        <!-- DATOS FAMILIARES -->
+        <div class="section-header">DATOS FAMILIARES (PARA ABONO ADULTO CON MENORES 8AÑOS O A. FAMILIAR)</div>
+        <table class="family-table">
+            <thead>
+                <tr>
+                    <th style="width:40%">Nombre</th>
+                    <th style="width:18%">DNI</th>
+                    <th style="width:22%">Fecha Nacimiento</th>
+                    <th style="width:20%">Parentesco</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td></tr>
+            </tbody>
+        </table>
+
+        <!-- DATOS BANCARIOS -->
+        <div class="section-header">DATOS BANCARIOS</div>
+        <div style="border: 1px solid #999; padding: 8px 10px; margin-bottom: 14px;">
+            <div class="bank-row">
+                <span class="bank-label">ES</span>
+                <span class="bank-box">&nbsp;&nbsp;</span>
+                <span class="bank-box">&nbsp;&nbsp;</span>
+            </div>
+            <div class="bank-row">
+                <span class="bank-label">Entidad</span>
+                <span class="bank-fill-sm"></span>
+                <span class="bank-fill-sm"></span>
+                <span class="bank-fill-sm"></span>
+                <span class="bank-fill-sm"></span>
+                &nbsp;
+                <span class="bank-label">Oficina</span>
+                <span class="bank-fill-sm"></span>
+                <span class="bank-fill-sm"></span>
+                <span class="bank-fill-sm"></span>
+                <span class="bank-fill-sm"></span>
+                &nbsp;
+                <span class="bank-label">DC</span>
+                <span class="bank-fill-sm"></span>
+                <span class="bank-fill-sm"></span>
+                &nbsp;
+                <span class="bank-label">Núm. cuenta</span>
+                <span class="bank-fill-sm"></span>
+                <span class="bank-fill-sm"></span>
+                <span class="bank-fill-sm"></span>
+                <span class="bank-fill-sm"></span>
+                <span class="bank-fill-sm"></span>
+                <span class="bank-fill-sm"></span>
+                <span class="bank-fill-sm"></span>
+                <span class="bank-fill-sm"></span>
+                <span class="bank-fill-sm"></span>
+                <span class="bank-fill-sm"></span>
+            </div>
+        </div>
+
+        <!-- TIPO DE ABONO -->
+        <div class="section-header">TIPO DE ABONO I CUOTA</div>
+        <div class="abono-section" style="border: 1px solid #999; padding: 10px 12px; margin-bottom: 14px;">
+            <div class="abono-row">
+                <input type="checkbox">
+                <span class="abono-name">Abonado Adulto (Completo, incluye menores de 8 años)</span>
+                <span class="abono-price">60 €</span>
+            </div>
+            <div class="abono-row">
+                <input type="checkbox">
+                <span class="abono-name">Abonado Pádel  (A partir 14 años)</span>
+                <span class="abono-price">56 €</span>
+            </div>
+            <div class="abono-row">
+                <input type="checkbox">
+                <span class="abono-name">Abonado Gym (A partir 14 años)</span>
+                <span class="abono-price">39 €</span>
+            </div>
+            <div class="abono-row">
+                <input type="checkbox">
+                <span class="abono-name">Abonado Gym + Clases Ilimitadas</span>
+                <span class="abono-price">60 €</span>
+            </div>
+            <div class="abono-row">
+                <input type="checkbox">
+                <span class="abono-name">Abonado Clases Dirigidas 2 h / semana</span>
+                <span class="abono-price">35 €</span>
+            </div>
+            <div class="abono-row">
+                <input type="checkbox">
+                <span class="abono-name">Abonado Clases Dirigidas Ilimitado</span>
+                <span class="abono-price">45 €</span>
+            </div>
+            <div class="abono-row">
+                <input type="checkbox">
+                <span class="abono-name">Abonado Completo con Dirigidas Ilimitadas</span>
+                <span class="abono-price">85 €</span>
+            </div>
+
+            <div style="margin-top: 10px; margin-bottom: 6px;">
+                <div class="abono-row">
+                    <input type="checkbox">
+                    <span class="abono-name"><strong>Abonado Familiar:</strong> (A = Adultos) (N= Niños de 8 a 14 años)</span>
+                </div>
+            </div>
+            <div class="familiar-options">
+                <span class="familiar-tag">2A+1N 131€</span>
+                <span class="familiar-tag">2A+2N 147€</span>
+                <span class="familiar-tag">2A+3N 162€</span>
+                <span class="familiar-tag">3A 147€</span>
+                <span class="familiar-tag">3A+1N o más 162€</span>
+                <span class="familiar-tag">4 A 178'50€</span>
+                <span class="familiar-tag">1A+1N 94€</span>
+                <span class="familiar-tag">1A+ 2N 120€</span>
+            </div>
+
+            <ul class="bullet-list">
+                <li>Niños menores de 8 años: se incluirán como abonados en el fichero, aunque no estén reflejados en la tarifa del abono Adulto o familiar.</li>
+                <li>A. Familiar: los menores de 8 años no reflejados en la tarifa se añadirán a la cuota y se modificará el importe al cumplir los 8 años, si no se notifica lo contrario por parte del titular. Lo mismo se regularizará cuando el menor de 14 los cumpla.</li>
+                <li>A. Adulto: los menores de 8 años saldrán del abono adulto al cumplir los 8 años. Pueden acceder al Abono infantil/juvenil.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- =================== PAGE 2 =================== -->
+    <div class="page">
+
+        <!-- Top bullet -->
+        <div class="page2-bullet">
+            <span>•</span>
+            <span>Las clases dirigidas ilimitadas tendrán un incremento de 15 Eur por miembro de Familia</span>
+        </div>
+
+        <!-- Matrícula checkbox -->
+        <div style="display:flex; align-items:flex-start; gap:8px; margin-bottom:30px; font-size:9.5pt;">
+            <input type="checkbox" style="margin-top:2px; width:14px; height:14px; flex-shrink:0;">
+            <span>Matrícula igual a dos mensualidades de la cuota correspondiente.</span>
+        </div>
+
+        <!-- PROTECCION DE DATOS -->
+        <div class="legal-section-title">PROTECCION DE DATOS:</div>
+        <div class="legal-section-title">CLAUSULA ABONADOS</div>
+        <p class="legal-text">De conformidad con lo establecido en la normativa vigente de Protección de Datos de Carácter Personal, e informamos que sus datos serán incorporados al sistema de tratamiento titularidad de S.E Espiral con CIF A64715030, Y domicilio en Gran Vía de Fontpineda s/n, 08780 Pallejà (Barcelona) con la finalidad de impartir la información en el deporte que usted se ha matriculado. En cumplimiento con la normativa vigente S.E. Espiral informa que los datos serán conservados durante el periodo legalmente establecido. La solicitud en la que se basa el tratamiento:</p>
+        <p class="legal-text">En S.E. L'Espiral le informamos que los tratamientos son requeridos para el correcto desarrollo de la relación jurídica entre usted y S.E. L'Espiral. Con la presente clausula queda informado de que sus datos serán comunicados en caso de ser necesario a: bancos y cajas, administraciones públicas y a todas aquellas entidades con las que sea necesaria la comunicación, con la finalidad de cumplir con la prestación del servicio anteriormente mencionado. El hecho de no facilitar los datos mencionados con anterioridad implica que no se pueda cumplir con la prestación de servicios.</p>
+        <p class="legal-text">S.E. L'Espiral informa que procederá a tratar los datos de manera lícita, leal, transparente, adecuada, pertinente, limitada, exacta y actualizada. Es por ello que S.E. L'Espiral se compromete a adoptar todas las medidas razonables para que estos se supriman y rectifiquen sin dilación cuando sean inexactos. De acuerdo con los derechos que le confiere la normativa vigente en protección de datos podrá ejercer los derechos de acceso, rectificación, limitación de tratamiento, supresión, portabilidad y oposición al tratamiento de sus datos de carácter personal así como el consentimiento prestado para el tratamiento de los mismos, dirigiendo su petición a la dirección postal indicada más arriba o al correo electrónico vfernandezespiral@gmail.com.</p>
+        <p class="legal-text"><em>Podrá dirigirse a la Autoridad de Control competente para presentar la reclamación que considere oportuna</em></p>
+
+        <div class="legal-section-title">CLAUSULA ABONADOS MENORES</div>
+        <p class="legal-text">En el caso de un alumno menor de edad, con las mismas características que la cláusula alumnos se amplía e informa al padre/madre o tutor legal que sus datos y los de su hijo/a y/o tutelado/a serán tratados del mismo modo.</p>
+
+        <div class="legal-section-title">TRATAMIENTO DE IMÁGENES</div>
+        <p class="legal-text">De acuerdo con lo que establece la Ley 1/1982 de 5 de mayo, sobre el derecho al honor, a la intimidad personal y familiar y a la propia imagen, solicitamos su consentimiento para utilizar sus imágenes captadas mediante fotografías o videos realizados por nuestra entidad, para publicarlas en nuestras redes sociales, web o publicidad (flyers informativos, carteles ...)</p>
+        <div class="tratamiento-row">
+            <input type="checkbox" style="width:14px;height:14px;flex-shrink:0;">
+            <span>SI AUTORIZO el tratamiento de las imágenes</span>
+        </div>
+        <div class="tratamiento-row">
+            <input type="checkbox" style="width:14px;height:14px;flex-shrink:0;">
+            <span>NO AUTORIZO el tratamiento de las imágenes</span>
+        </div>
+
+        <div class="legal-section-title" style="margin-top:16px;">NORMATIVAS</div>
+        <p class="legal-text">S.E. L'Espiral le informa de las normativas vigentes de la actividad contratada y de la utilización debida de las instalaciones de S.E. L'Espiral. (Se puede consultar en la web www.lespiral.es) y usted se compromete a cumplirlas y respetarlas.</p>
+        <p class="legal-text">Finalmente, S.E. L'Espiral comunica que con la firma del presente documento otorga el consentimiento explícito para los tratamientos mencionados con anterioridad.</p>
+
+        <div class="firma-line">
+            <div class="firma-blank"></div>
+            <span>Fecha y firma</span>
+        </div>
+    </div>
+
+</body>
+</html>
