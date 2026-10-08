@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1e3a5f">
+    <title>Ace App</title>
+    <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { -webkit-tap-highlight-color: transparent; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .app-container { max-width: 480px; margin: 0 auto; min-height: 100vh; background-color: #f8fafc; position: relative; padding-bottom: 70px;}
+    </style>
+</head>
+<body class="bg-gray-100 font-sans text-gray-800">
+    <div class="app-container shadow-2xl overflow-hidden">
+        
+        <!-- Header -->
+        <header class="bg-[#1e3a5f] text-white pt-10 pb-6 px-6 rounded-b-[2.5rem] shadow-lg sticky top-0 z-10">
+            <div class="flex justify-between items-center mb-4">
+                <div class="flex items-center gap-3">
+                    <img src="assets/logo.png" class="h-10 bg-white rounded-full p-1" alt="Logo">
+                    <div>
+                        <h1 class="font-bold text-lg leading-tight" id="userNameDisplay">Cargando...</h1>
+                        <span id="subscriptionBadge" class="text-xs bg-gray-400 text-white px-2 py-1 rounded-full font-bold inline-block mt-1">Cargando Abono...</span>
+                    </div>
+                </div>
+                <button onclick="handleLogout()" class="text-white/70 hover:text-white"><i class="fas fa-sign-out-alt text-xl"></i></button>
+            </div>
+        </header>
+
+        <!-- SCREENS -->
+        
+        <!-- Screen 1: Dashboard (Home) -->
+        <div id="screen-home" class="app-screen p-4 space-y-6 mt-4">
+            <!-- QR Access -->
+            <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl p-5 text-white shadow-md flex justify-between items-center cursor-pointer active:scale-95 transition">
+                <div>
+                    <h3 class="font-bold text-lg mb-1"><i class="fas fa-qrcode mr-2"></i> Acceso al Club</h3>
+                    <p class="text-blue-100 text-sm">Toca para abrir tu código QR</p>
+                </div>
+                <i class="fas fa-chevron-right opacity-70"></i>
+            </div>
+
+            <!-- Próxima Reserva -->
+            <div>
+                <h3 class="font-bold text-gray-800 mb-3 px-1">Próximos Partidos Rápidos</h3>
+                <div id="courtsList" class="space-y-3">
+                    <!-- Inyectado por app.js -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 2: Classes -->
+        <div id="screen-classes" class="app-screen p-4 space-y-6 mt-4 hidden">
+            <h2 class="text-2xl font-bold text-gray-800 px-1"><i class="fas fa-dumbbell text-purple-500 mr-2"></i> Clases de Hoy</h2>
+            <p class="text-sm text-gray-500 px-1 mb-4">Reserva tu plaza. Los precios se adaptan a tu abono automáticamente.</p>
+            
+            <div id="classesList" class="space-y-3">
+                <!-- Inyectado por app.js -->
+            </div>
+        </div>
+
+        <!-- Screen 3: Extras (Shop/Restaurant) -->
+        <div id="screen-extras" class="app-screen p-4 space-y-6 mt-4 hidden">
+            <h2 class="text-2xl font-bold text-gray-800 px-1"><i class="fas fa-star text-orange-500 mr-2"></i> Club Social</h2>
+            <div id="extrasList">
+                <!-- Inyectado por app.js -->
+            </div>
+        </div>
+
+        <!-- Bottom Navigation Bar -->
+        <nav class="bg-white border-t border-gray-200 fixed bottom-0 w-full max-w-[480px] pb-safe z-50">
+            <div class="flex justify-around items-center h-16">
+                <a href="#" class="app-tab flex flex-col items-center justify-center w-full text-blue-600 space-y-1" data-target="screen-home">
+                    <i class="fas fa-home text-xl"></i>
+                    <span class="text-[10px] font-semibold">Inicio</span>
+                </a>
+                <a href="#" class="app-tab flex flex-col items-center justify-center w-full text-gray-400 space-y-1" data-target="screen-classes">
+                    <i class="fas fa-users text-xl"></i>
+                    <span class="text-[10px] font-semibold">Clases</span>
+                </a>
+                <a href="#" class="app-tab flex flex-col items-center justify-center w-full text-gray-400 space-y-1" data-target="screen-extras">
+                    <i class="fas fa-store text-xl"></i>
+                    <span class="text-[10px] font-semibold">Social</span>
+                </a>
+                <a href="index.html" class="flex flex-col items-center justify-center w-full text-gray-400 space-y-1">
+                    <i class="fas fa-globe text-xl"></i>
+                    <span class="text-[10px] font-semibold">Web</span>
+                </a>
+            </div>
+        </nav>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            setupTabs();
+            const loggedIn = await checkAuth();
+            if (!loggedIn) {
+                window.location.replace('login.html');
+            } else {
+                renderAppUI();
+            }
+        });
+    </script>
+</body>
+</html>

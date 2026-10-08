@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Panel - Ace Sport Club</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans min-h-screen">
+    
+    <!-- Navbar -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="container mx-auto px-4 max-w-5xl flex justify-between items-center h-16">
+            <a href="index.html" class="flex items-center gap-2">
+                <img src="assets/logo.png" alt="Ace Sport Club" class="h-8">
+                <span class="font-bold text-lg text-[#1e3a5f]">Ace Sport Club</span>
+            </a>
+            <div class="flex items-center gap-4">
+                <span class="text-gray-600 text-sm hidden md:inline"><i class="fas fa-user-circle mr-1"></i> Hola, Usuario</span>
+                <button class="text-sm font-semibold text-red-500 hover:text-red-700">Cerrar Sesión</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Dashboard -->
+    <main class="container mx-auto px-4 max-w-5xl py-8">
+        
+        <!-- Header / Subscription Status -->
+        <div class="bg-white rounded-xl shadow-sm p-6 mb-8 flex flex-col md:flex-row justify-between items-center border-l-4 border-green-500">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-800 mb-1">Tu Abono: <span class="text-[#1e3a5f]">Abonado Adulto</span></h1>
+                <p class="text-green-600 font-semibold text-sm"><i class="fas fa-check-circle mr-1"></i> Estado: Activo</p>
+            </div>
+            <div class="mt-4 md:mt-0">
+                <button class="text-blue-600 hover:underline text-sm font-medium mr-4">Gestionar pago</button>
+                <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 px-4 rounded-lg font-medium text-sm transition">Ver mi QR de acceso</button>
+            </div>
+        </div>
+
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Servicios del Club</h2>
+        
+        <!-- Action Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            
+            <!-- Playtomic Card -->
+            <div class="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xl">
+                        <i class="fas fa-table-tennis"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg">Reserva de Pistas</h3>
+                        <p class="text-sm text-gray-500">Pádel y Tenis vía Playtomic</p>
+                    </div>
+                </div>
+                <p class="text-gray-600 text-sm mb-4">Conecta con tu app de Playtomic para ver la disponibilidad de pistas en tiempo real y hacer tus reservas.</p>
+                <div class="flex gap-2">
+                    <a href="https://playtomic.com/clubs/se-lespiral-manager?sport=PADEL" target="_blank" class="flex-1 bg-[#1e3a5f] hover:bg-blue-900 text-white text-center py-2 rounded-lg text-sm font-semibold transition">Reservar Pádel</a>
+                    <a href="https://playtomic.com/clubs/se-lespiral-manager?sport=TENNIS" target="_blank" class="flex-1 bg-[#1e3a5f] hover:bg-blue-900 text-white text-center py-2 rounded-lg text-sm font-semibold transition">Reservar Tenis</a>
+                </div>
+            </div>
+
+            <!-- BookyWay Card -->
+            <div class="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center text-xl">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg">Clases Dirigidas</h3>
+                        <p class="text-sm text-gray-500">Fitness y Salud vía BookyWay</p>
+                    </div>
+                </div>
+                <p class="text-gray-600 text-sm mb-4">Reserva tu plaza para Pilates, Cross Training, Barre y más desde tu cuenta de BookyWay.</p>
+                <a href="https://bookyway.com/en/app-for-bookings/" target="_blank" class="block w-full bg-purple-600 hover:bg-purple-700 text-white text-center py-2 rounded-lg text-sm font-semibold transition">Ir a BookyWay</a>
+            </div>
+
+        </div>
+
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Eventos, Restaurante y Ofertas</h2>
+        
+        <!-- Placeholder for future content -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden flex flex-col">
+                <div class="h-32 bg-gray-200 flex items-center justify-center text-gray-400">
+                    <i class="fas fa-utensils text-3xl"></i>
+                </div>
+                <div class="p-4 flex-grow">
+                    <span class="text-xs font-bold text-orange-500 uppercase tracking-wider mb-1 block">Restaurante</span>
+                    <h4 class="font-bold text-gray-800">Menú del Día</h4>
+                    <p class="text-sm text-gray-500 mt-1">Próximamente disponible. Aquí verás las ofertas del restaurante.</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden flex flex-col">
+                <div class="h-32 bg-gray-200 flex items-center justify-center text-gray-400">
+                    <i class="fas fa-trophy text-3xl"></i>
+                </div>
+                <div class="p-4 flex-grow">
+                    <span class="text-xs font-bold text-blue-500 uppercase tracking-wider mb-1 block">Torneo</span>
+                    <h4 class="font-bold text-gray-800">Torneo de Primavera</h4>
+                    <p class="text-sm text-gray-500 mt-1">Espacio reservado para anunciar próximos eventos y torneos del club.</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden flex flex-col">
+                <div class="h-32 bg-gray-200 flex items-center justify-center text-gray-400">
+                    <i class="fas fa-box-open text-3xl"></i>
+                </div>
+                <div class="p-4 flex-grow">
+                    <span class="text-xs font-bold text-green-500 uppercase tracking-wider mb-1 block">Tienda</span>
+                    <h4 class="font-bold text-gray-800">Material Deportivo</h4>
+                    <p class="text-sm text-gray-500 mt-1">Espacio para comprar bolas de pádel/tenis, grips y más (Próximamente).</p>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

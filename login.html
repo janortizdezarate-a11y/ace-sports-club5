@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Acceder - Ace Sport Club</title>
+    <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 flex flex-col min-h-screen">
+
+    <div class="flex-grow flex items-center justify-center p-6">
+        <div class="w-full max-w-md bg-white rounded-3xl shadow-xl p-8 border border-gray-100">
+            <div class="text-center mb-8">
+                <img src="assets/logo.png" alt="Logo" class="h-16 mx-auto mb-4">
+                <h1 class="text-2xl font-bold text-[#1e3a5f]">Bienvenido de nuevo</h1>
+                <p class="text-gray-500 text-sm mt-2">Accede a tu cuenta del club</p>
+            </div>
+
+            <form id="loginForm" class="space-y-5">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <div class="relative">
+                        <i class="fas fa-envelope absolute left-3 top-3 text-gray-400"></i>
+                        <input type="email" id="email" required class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition">
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
+                    <div class="relative">
+                        <i class="fas fa-lock absolute left-3 top-3 text-gray-400"></i>
+                        <input type="password" id="password" required class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition">
+                    </div>
+                </div>
+
+                <div id="errorMsg" class="text-red-500 text-sm hidden font-medium text-center">Credenciales incorrectas.</div>
+
+                <button type="submit" id="submitBtn" class="w-full bg-[#1e3a5f] hover:bg-blue-900 text-white font-bold py-3 px-4 rounded-xl transition shadow-md flex justify-center items-center">
+                    Entrar a la App
+                </button>
+            </form>
+
+            <div class="mt-8 text-center border-t pt-6">
+                <p class="text-gray-500 text-sm">¿No eres miembro?</p>
+                <a href="join.html" class="inline-block mt-2 font-bold text-green-600 hover:text-green-700">Inscribirse y pagar abono</a>
+                <br>
+                <a href="index.html" class="inline-block mt-4 text-xs text-gray-400 underline">Volver a la web</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Already logged in? Redirect to app
+            if (await checkAuth()) {
+                window.location.replace('app.html');
+            }
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const btn = document.getElementById('submitBtn');
+            const errorMsg = document.getElementById('errorMsg');
+
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i>';
+            btn.disabled = true;
+            errorMsg.classList.add('hidden');
+
+            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+            if (error) {
+                errorMsg.textContent = error.message.includes('Invalid login') ? 'Email o contraseña incorrectos.' : error.message;
+                errorMsg.classList.remove('hidden');
+                btn.innerHTML = 'Entrar a la App';
+                btn.disabled = false;
+            } else {
+                window.location.replace('app.html');
+            }
+        });
+    </script>
+</body>
+</html>
