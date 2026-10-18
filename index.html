@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ace Sport Club</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js');
+            });
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased">
+
+    <!-- Navigation -->
+    <nav class="bg-[#1e3a5f] text-white fixed w-full z-40 top-0 shadow-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <a href="#home" class="flex-shrink-0 flex items-center gap-3">
+                    <img class="h-11 w-auto bg-white rounded-full p-1" src="assets/logo.png" alt="Ace Sport Club">
+                    <span class="font-extrabold text-lg tracking-tight">Ace Sport Club</span>
+                </a>
+                
+                <div class="hidden md:flex space-x-6 items-center text-sm font-semibold text-slate-200">
+                    <a href="#home" class="hover:text-white transition-colors" data-i18n="nav_home">Inicio</a>
+                    <a href="#facilities" class="hover:text-white transition-colors" data-i18n="nav_facilities">Instalaciones</a>
+                    <a href="#hours" class="hover:text-white transition-colors" data-i18n="nav_hours">Horarios</a>
+                    <a href="#tennis" class="hover:text-white transition-colors" data-i18n="nav_tennis">Tenis</a>
+                    <a href="#padel" class="hover:text-white transition-colors" data-i18n="nav_padel">Pádel</a>
+                    <a href="#timetables" class="hover:text-white transition-colors" data-i18n="nav_classes">Clases</a>
+                    <a href="#memberships" class="hover:text-white transition-colors" data-i18n="nav_memberships">Abonos</a>
+                    <a href="#contact" class="hover:text-white transition-colors" data-i18n="nav_contact">Contacto</a>
+                    
+                    <!-- Language Selector -->
+                    <div class="relative ml-2">
+                        <select id="language-select" aria-label="Idioma" class="bg-[#0f1f33] text-white border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-semibold focus:outline-none focus:border-emerald-500">
+                            <option value="es">Español</option>
+                            <option value="en">English</option>
+                            <option value="ca">Català</option>
+                        </select>
+                    </div>
+
+                    <a href="app.html" class="ml-2 bg-emerald-700 hover:bg-emerald-800 text-white px-5 py-2.5 rounded-xl font-bold transition text-xs flex items-center gap-2 shadow-sm">
+                        <i class="fas fa-mobile-alt"></i> <span data-i18n="nav_app_btn">Instalar App</span>
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center gap-2">
+                    <select id="language-select-mobile" aria-label="Idioma móvil" class="bg-[#0f1f33] text-white border border-slate-700 rounded-lg px-2 py-1 text-xs font-semibold focus:outline-none">
+                        <option value="es">ES</option>
+                        <option value="en">EN</option>
+                        <option value="ca">CA</option>
+                    </select>
+                    <button id="mobile-menu-btn" aria-label="Abrir menú" class="text-white p-2 hover:text-emerald-400 focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-[#0f1f33] border-t border-slate-800 pb-4 text-sm font-semibold">
+            <a href="#home" class="block px-6 py-3 hover:bg-slate-800 text-slate-200 hover:text-white" data-i18n="nav_home">Inicio</a>
+            <a href="#facilities" class="block px-6 py-3 hover:bg-slate-800 text-slate-200 hover:text-white" data-i18n="nav_facilities">Instalaciones</a>
+            <a href="#hours" class="block px-6 py-3 hover:bg-slate-800 text-slate-200 hover:text-white" data-i18n="nav_hours">Horarios</a>
+            <a href="#tennis" class="block px-6 py-3 hover:bg-slate-800 text-slate-200 hover:text-white" data-i18n="nav_tennis">Tenis</a>
+            <a href="#padel" class="block px-6 py-3 hover:bg-slate-800 text-slate-200 hover:text-white" data-i18n="nav_padel">Pádel</a>
+            <a href="#timetables" class="block px-6 py-3 hover:bg-slate-800 text-slate-200 hover:text-white" data-i18n="nav_classes">Clases</a>
+            <a href="#memberships" class="block px-6 py-3 hover:bg-slate-800 text-slate-200 hover:text-white" data-i18n="nav_memberships">Abonos</a>
+            <a href="#contact" class="block px-6 py-3 hover:bg-slate-800 text-slate-200 hover:text-white" data-i18n="nav_contact">Contacto</a>
+            <div class="px-6 pt-2">
+                <a href="app.html" class="block w-full text-center bg-emerald-700 text-white font-bold py-3 rounded-xl shadow-sm"><i class="fas fa-mobile-alt mr-2"></i> <span data-i18n="nav_app_btn">Instalar App</span></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-[#1e3a5f] text-white">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white mb-6" data-i18n="hero_title">Ace Sport Club</h1>
+            <p class="text-lg sm:text-xl text-slate-200 max-w-2xl mx-auto mb-10 leading-relaxed font-normal" data-i18n="hero_subtitle">Tenis, pádel, fitness y actividades dirigidas en Pallejà.</p>
+            
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                <a href="#facilities" class="w-full sm:w-auto bg-slate-900/60 hover:bg-slate-900 border border-slate-700 text-white font-bold py-3.5 px-8 rounded-xl transition text-sm" data-i18n="hero_btn_explore">Explorar Instalaciones</a>
+                <a href="app.html" class="w-full sm:w-auto bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3.5 px-8 rounded-xl transition text-sm flex items-center justify-center gap-2 shadow-sm">
+                    <i class="fas fa-mobile-alt"></i> <span data-i18n="hero_btn_app">Abrir / Instalar App</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Facilities Section -->
+    <section id="facilities" class="py-20 bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14">
+                <h2 class="text-3xl font-extrabold text-[#1e3a5f] tracking-tight" data-i18n="facilities_title">Instalaciones</h2>
+                <div class="w-12 h-1 bg-emerald-600 mx-auto mt-3"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Padel -->
+                <div class="club-card overflow-hidden">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Sanchez-Casal_Paddle_Tennis_Game.jpg" alt="Padel Courts" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-slate-900 mb-2" data-i18n="fac_padel_title">11 Pistas de Pádel</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed" data-i18n="fac_padel_desc">Pistas panorámicas y cubiertas con césped sintético de alta gama.</p>
+                    </div>
+                </div>
+                <!-- Tennis -->
+                <div class="club-card overflow-hidden">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/94/2013_Australian_Open_-_Guillaume_Rufin.jpg" alt="Tennis Courts" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-slate-900 mb-2" data-i18n="fac_tennis_title">4 Pistas de Tenis</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed" data-i18n="fac_tennis_desc">Pistas reglamentarias con iluminación LED de alta potencia.</p>
+                    </div>
+                </div>
+                <!-- Gym -->
+                <div class="club-card overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80" alt="Gym" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-slate-900 mb-2" data-i18n="fac_gym_title">Gimnasio Equipado</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed" data-i18n="fac_gym_desc">Zona cardiovascular y de musculación completa para todos los niveles.</p>
+                    </div>
+                </div>
+                <!-- Pool -->
+                <div class="club-card overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?auto=format&fit=crop&w=800&q=80" alt="Swimming Pool" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-slate-900 mb-2" data-i18n="fac_pool_title">Piscina Exterior</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed" data-i18n="fac_pool_desc">Piscina al aire libre con solárium de temporada.</p>
+                    </div>
+                </div>
+                <!-- Classes -->
+                <div class="club-card overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=800&q=80" alt="Guided Classes" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-slate-900 mb-2" data-i18n="fac_classes_title">2 Salas Interiores</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed" data-i18n="fac_classes_desc">Salas para actividades dirigidas, entrenamiento funcional y movilidad.</p>
+                    </div>
+                </div>
+                <!-- Restaurant -->
+                <div class="club-card overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80" alt="Restaurant" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-slate-900 mb-2" data-i18n="fac_restaurant_title">Restaurante y Vestuarios</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed" data-i18n="fac_restaurant_desc">Menú saludable, comida post-entreno, cafetería y vestuarios completos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Opening Hours Section -->
+    <section id="hours" class="py-20 bg-slate-900 text-white">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-extrabold tracking-tight" data-i18n="hours_title">Horarios de Apertura</h2>
+                <div class="w-12 h-1 bg-emerald-500 mx-auto mt-3"></div>
+                <p class="text-slate-300 text-sm mt-3" data-i18n="hours_subtitle">Aplicables a pistas de tenis y pádel, clases dirigidas y gimnasio.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+                <div class="bg-slate-800 border border-slate-700 rounded-2xl p-8 text-center">
+                    <h3 class="text-base font-bold text-slate-300" data-i18n="hours_weekdays_title">Lunes a Viernes</h3>
+                    <p class="text-3xl sm:text-4xl font-extrabold text-emerald-400 my-3" data-i18n="hours_weekdays_time">9:00 - 22:00</p>
+                    <p class="text-xs text-slate-400" data-i18n="hours_weekdays_sub">Tenis, Pádel, Gimnasio y Clases Dirigidas</p>
+                </div>
+
+                <div class="bg-slate-800 border border-slate-700 rounded-2xl p-8 text-center">
+                    <h3 class="text-base font-bold text-slate-300" data-i18n="hours_weekends_title">Fines de Semana y Festivos</h3>
+                    <p class="text-3xl sm:text-4xl font-extrabold text-emerald-400 my-3" data-i18n="hours_weekends_time">9:00 - 21:00</p>
+                    <p class="text-xs text-slate-400" data-i18n="hours_weekends_sub">Sábados, Domingos y Días Festivos</p>
+                </div>
+            </div>
+            <p class="text-center text-xs text-slate-400 mt-6" data-i18n="hours_restaurant_note">* El restaurante y la cafetería disponen de horario propio independiente.</p>
+        </div>
+    </section>
+
+    <!-- Dedicated Tennis Section -->
+    <section id="tennis" class="py-20 bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14">
+                <h2 class="text-3xl font-extrabold text-[#1e3a5f] tracking-tight" data-i18n="tennis_title">Tenis</h2>
+                <div class="w-12 h-1 bg-emerald-600 mx-auto mt-3"></div>
+                <p class="text-slate-600 text-sm mt-3 max-w-xl mx-auto" data-i18n="tennis_desc">Cuatro pistas de tenis, escuela formativa para todas las edades y ligas oficiales.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Courts Card -->
+                <div class="club-card p-8 flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full uppercase" data-i18n="tennis_courts_badge">Instalación</span>
+                        <h3 class="text-xl font-bold text-slate-900 mt-4 mb-2" data-i18n="tennis_courts_title">4 Pistas de Tenis</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-6" data-i18n="tennis_courts_desc">Superficie cuidada con iluminación uniforme para partidos diurnos y nocturnos.</p>
+                        <p class="text-xs text-slate-500 font-medium mb-6" data-i18n="tennis_courts_hours">Lun-Vie: 9:00-22:00 | Sáb-Dom: 9:00-21:00</p>
+                    </div>
+                    <a href="https://playtomic.com/clubs/se-lespiral-manager?sport=TENNIS" target="_blank" class="w-full text-center bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 px-6 rounded-xl text-sm transition">
+                        <span data-i18n="tennis_book_btn">Reserva en Playtomic</span>
+                    </a>
+                </div>
+
+                <!-- School Card -->
+                <div class="club-card p-8">
+                    <span class="text-xs font-bold text-blue-700 bg-blue-50 px-3 py-1 rounded-full uppercase" data-i18n="tennis_school_badge">Escuela</span>
+                    <h3 class="text-xl font-bold text-slate-900 mt-4 mb-2" data-i18n="tennis_school_title">Escuela de Tenis</h3>
+                    <p class="text-slate-600 text-sm mb-4" data-i18n="tennis_school_desc">Entrenamientos individuales y grupales según franja de edad y nivel técnico:</p>
+                    <div class="space-y-2.5 text-xs">
+                        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl">
+                            <strong class="text-slate-900 block" data-i18n="tennis_level_init">Iniciación (Empuñaduras, golpeo base y control de pelota)</strong>
+                        </div>
+                        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl">
+                            <strong class="text-slate-900 block" data-i18n="tennis_level_inter">Intermedio (Consistencia, efectos, posicionamiento y ritmo)</strong>
+                        </div>
+                        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl">
+                            <strong class="text-slate-900 block" data-i18n="tennis_level_comp">Competición (Estrategia táctica, preparación física y torneos)</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Competition Card -->
+                <div class="club-card p-8">
+                    <span class="text-xs font-bold text-slate-700 bg-slate-100 px-3 py-1 rounded-full uppercase" data-i18n="tennis_competitions_badge">Competición</span>
+                    <h3 class="text-xl font-bold text-slate-900 mt-4 mb-2" data-i18n="tennis_competitions_title">Torneos y Ligas</h3>
+                    <p class="text-slate-600 text-sm mb-4" data-i18n="tennis_competitions_desc">Participa a lo largo de la temporada en el calendario competitivo del club:</p>
+                    <ul class="space-y-3 text-xs text-slate-700">
+                        <li class="p-3 bg-slate-50 border border-slate-200 rounded-xl" data-i18n="tennis_comp_1">
+                            <strong>Torneos Intraclub:</strong> Competiciones internas bimestrales por categorías.
+                        </li>
+                        <li class="p-3 bg-slate-50 border border-slate-200 rounded-xl" data-i18n="tennis_comp_2">
+                            <strong>Partidos Interclubs:</strong> Encuentros y jornadas deportivas contra otros clubes.
+                        </li>
+                        <li class="p-3 bg-slate-50 border border-slate-200 rounded-xl" data-i18n="tennis_comp_3">
+                            <strong>Liga Regular:</strong> Sistema de liga anual con fases de ascenso y descenso.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dedicated Padel Section -->
+    <section id="padel" class="py-20 bg-slate-50 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14">
+                <h2 class="text-3xl font-extrabold text-[#1e3a5f] tracking-tight" data-i18n="padel_title">Pádel</h2>
+                <div class="w-12 h-1 bg-emerald-600 mx-auto mt-3"></div>
+                <p class="text-slate-600 text-sm mt-3 max-w-xl mx-auto" data-i18n="padel_desc">11 pistas de cristal, escuela especializada y torneos sociales continuos.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Courts Card -->
+                <div class="club-card p-8 flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full uppercase" data-i18n="padel_courts_badge">Instalación</span>
+                        <h3 class="text-xl font-bold text-slate-900 mt-4 mb-2" data-i18n="padel_courts_title">11 Pistas de Pádel</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-6" data-i18n="padel_courts_desc">Pistas panorámicas y cubiertas con focos LED antideslumbrantes.</p>
+                        <p class="text-xs text-slate-500 font-medium mb-6" data-i18n="padel_courts_hours">Lun-Vie: 9:00-22:00 | Sáb-Dom: 9:00-21:00</p>
+                    </div>
+                    <a href="https://playtomic.com/clubs/se-lespiral-manager?sport=PADEL" target="_blank" class="w-full text-center bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 px-6 rounded-xl text-sm transition">
+                        <span data-i18n="padel_book_btn">Reserva en Playtomic</span>
+                    </a>
+                </div>
+
+                <!-- School Card -->
+                <div class="club-card p-8">
+                    <span class="text-xs font-bold text-blue-700 bg-blue-50 px-3 py-1 rounded-full uppercase" data-i18n="padel_school_badge">Escuela</span>
+                    <h3 class="text-xl font-bold text-slate-900 mt-4 mb-2" data-i18n="padel_school_title">Escuela de Pádel</h3>
+                    <p class="text-slate-600 text-sm mb-4" data-i18n="padel_school_desc">Formación con técnicos titulados estructurada por edades y nivel:</p>
+                    <div class="space-y-2.5 text-xs">
+                        <div class="p-3 bg-white border border-slate-200 rounded-xl">
+                            <strong class="text-slate-900 block" data-i18n="padel_level_init">Iniciación (Paredes, empuñaduras, posición y control del punto)</strong>
+                        </div>
+                        <div class="p-3 bg-white border border-slate-200 rounded-xl">
+                            <strong class="text-slate-900 block" data-i18n="padel_level_inter">Intermedio (Bandeja, víbora, volea y estrategia en pareja)</strong>
+                        </div>
+                        <div class="p-3 bg-white border border-slate-200 rounded-xl">
+                            <strong class="text-slate-900 block" data-i18n="padel_level_comp">Competición (Alta intensidad, ritmo de juego y torneos oficiales)</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Competition Card -->
+                <div class="club-card p-8">
+                    <span class="text-xs font-bold text-slate-700 bg-slate-100 px-3 py-1 rounded-full uppercase" data-i18n="padel_competitions_badge">Competición</span>
+                    <h3 class="text-xl font-bold text-slate-900 mt-4 mb-2" data-i18n="padel_competitions_title">Ligas y Torneos</h3>
+                    <p class="text-slate-600 text-sm mb-4" data-i18n="padel_competitions_desc">Calendario competitivo activo para todos los niveles de socios:</p>
+                    <ul class="space-y-3 text-xs text-slate-700">
+                        <li class="p-3 bg-white border border-slate-200 rounded-xl" data-i18n="padel_comp_1">
+                            <strong>Americanas de Fin de Semana:</strong> Torneos dinámicos con rotación de parejas.
+                        </li>
+                        <li class="p-3 bg-white border border-slate-200 rounded-xl" data-i18n="padel_comp_2">
+                            <strong>Partidos Abiertos en Playtomic:</strong> Encuentros nivelados por nivelación oficial.
+                        </li>
+                        <li class="p-3 bg-white border border-slate-200 rounded-xl" data-i18n="padel_comp_3">
+                            <strong>Liga Social de Pádel:</strong> Categorías masculina, femenina y mixta durante el curso.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timetables Section -->
+    <section id="timetables" class="py-20 bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14">
+                <h2 class="text-3xl font-extrabold text-[#1e3a5f] tracking-tight" data-i18n="tt_title">Horario de Clases Dirigidas</h2>
+                <div class="w-12 h-1 bg-emerald-600 mx-auto mt-3"></div>
+                <p class="text-slate-600 text-sm mt-3 max-w-xl mx-auto" data-i18n="tt_subtitle">Consulta la programación semanal en Sala 1 y Sala 2.</p>
+            </div>
+            
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm max-w-5xl mx-auto">
+                <div class="flex justify-center mb-6 space-x-3">
+                    <button id="tab-sala1" class="px-6 py-2 rounded-xl font-bold transition-colors bg-[#1e3a5f] text-white text-sm shadow-sm">Sala 1</button>
+                    <button id="tab-sala2" class="px-6 py-2 rounded-xl font-bold transition-colors bg-slate-100 text-slate-700 hover:bg-slate-200 text-sm">Sala 2</button>
+                </div>
+                
+                <div class="overflow-x-auto pb-2">
+                    <div id="timetable-schedule" class="min-w-[700px] border border-slate-200 rounded-xl overflow-hidden"></div>
+                </div>
+
+                <div class="mt-8 text-center">
+                    <a href="https://bookyway.com/en/app-for-bookings/" target="_blank" class="inline-block bg-[#1e3a5f] hover:bg-[#152840] text-white font-bold py-3.5 px-10 rounded-xl text-sm transition">
+                        <i class="fas fa-calendar-check mr-2"></i> <span data-i18n="tt_book_btn">Reservar en BookyWay</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Memberships Section -->
+    <section id="memberships" class="py-20 bg-slate-50 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14">
+                <h2 class="text-3xl font-extrabold text-[#1e3a5f] tracking-tight" data-i18n="mem_title">Abonos y Tarifas</h2>
+                <div class="w-12 h-1 bg-emerald-600 mx-auto mt-3"></div>
+                <p class="text-slate-600 text-sm mt-3 max-w-xl mx-auto" data-i18n="mem_subtitle">Elige la modalidad que mejor encaja con tus objetivos deportivos.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <div class="club-card p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-base font-bold text-slate-900" data-i18n="mem_adult_title">Abonado Adulto</h3>
+                            <span class="text-2xl font-extrabold text-[#1e3a5f]">60€<span class="text-xs text-slate-500 font-normal">/mes</span></span>
+                        </div>
+                        <p class="text-slate-600 text-xs leading-relaxed" data-i18n="mem_adult_desc">Acceso completo. Incluye menores de 8 años. A partir de 14 años.</p>
+                    </div>
+                </div>
+
+                <div class="club-card p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-base font-bold text-slate-900" data-i18n="mem_padel_title">Abonado Pádel</h3>
+                            <span class="text-2xl font-extrabold text-[#1e3a5f]">56€<span class="text-xs text-slate-500 font-normal">/mes</span></span>
+                        </div>
+                        <p class="text-slate-600 text-xs leading-relaxed" data-i18n="mem_padel_desc">Acceso completo a pádel para mayores de 14 años.</p>
+                    </div>
+                </div>
+
+                <div class="club-card p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-base font-bold text-slate-900" data-i18n="mem_gym_title">Abonado Gym</h3>
+                            <span class="text-2xl font-extrabold text-[#1e3a5f]">39€<span class="text-xs text-slate-500 font-normal">/mes</span></span>
+                        </div>
+                        <p class="text-slate-600 text-xs leading-relaxed" data-i18n="mem_gym_desc">Acceso a sala de musculación y cardio a partir de 14 años.</p>
+                    </div>
+                </div>
+
+                <div class="club-card p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-base font-bold text-slate-900" data-i18n="mem_gymclass_title">Gym + Clases Ilimitadas</h3>
+                            <span class="text-2xl font-extrabold text-[#1e3a5f]">60€<span class="text-xs text-slate-500 font-normal">/mes</span></span>
+                        </div>
+                        <p class="text-slate-600 text-xs leading-relaxed" data-i18n="mem_gymclass_desc">Gimnasio y todas las clases dirigidas semanales sin límite.</p>
+                    </div>
+                </div>
+
+                <div class="club-card p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-base font-bold text-slate-900" data-i18n="mem_class2h_title">Clases Dirigidas (2h/sem)</h3>
+                            <span class="text-2xl font-extrabold text-[#1e3a5f]">35€<span class="text-xs text-slate-500 font-normal">/mes</span></span>
+                        </div>
+                        <p class="text-slate-600 text-xs leading-relaxed" data-i18n="mem_class2h_desc">Dos horas semanales de clases dirigidas en Sala 1 o Sala 2.</p>
+                    </div>
+                </div>
+
+                <div class="club-card p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-base font-bold text-slate-900" data-i18n="mem_classunlim_title">Clases Dirigidas Ilimitadas</h3>
+                            <span class="text-2xl font-extrabold text-[#1e3a5f]">45€<span class="text-xs text-slate-500 font-normal">/mes</span></span>
+                        </div>
+                        <p class="text-slate-600 text-xs leading-relaxed" data-i18n="mem_classunlim_desc">Acceso ilimitado a todas las actividades dirigidas.</p>
+                    </div>
+                </div>
+
+                <div class="club-card p-6 flex flex-col justify-between sm:col-span-2 border-emerald-500/50 bg-emerald-50/30">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-base font-extrabold text-emerald-900" data-i18n="mem_complete_title">Completo + Dirigidas Ilimitadas</h3>
+                            <span class="text-2xl font-extrabold text-emerald-800">85€<span class="text-xs text-slate-500 font-normal">/mes</span></span>
+                        </div>
+                        <p class="text-slate-700 text-xs leading-relaxed" data-i18n="mem_complete_desc">Todo incluido: tenis, pádel, gimnasio, piscina y todas las clases dirigidas.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notes -->
+            <div class="bg-white rounded-xl p-6 border border-slate-200 text-xs text-slate-600 space-y-2 max-w-4xl mx-auto mb-10">
+                <p>• <strong data-i18n="mem_note1_bold">Matrícula:</strong> <span data-i18n="mem_note1">Equivalente a dos mensualidades de la cuota elegida (excepto Plan Gratuito).</span></p>
+                <p>• <span data-i18n="mem_note2">Los niños menores de 8 años quedan incluidos en el fichero sin cuota adicional.</span></p>
+                <p>• <span data-i18n="mem_note3">Las clases dirigidas ilimitadas tienen un suplemento de 15 € por miembro de familia.</span></p>
+            </div>
+
+            <div class="text-center">
+                <a href="app.html" class="inline-block bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-4 px-10 rounded-xl text-sm transition shadow-sm">
+                    <i class="fas fa-mobile-alt mr-2"></i> <span data-i18n="mem_cta">Abrir App y Abonarse</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-slate-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14">
+                <h2 class="text-3xl font-extrabold tracking-tight" data-i18n="contact_title">Contacto y Ubicación</h2>
+                <div class="w-12 h-1 bg-emerald-500 mx-auto mt-3"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-slate-800 border border-slate-700 p-8 sm:p-12 rounded-2xl max-w-4xl mx-auto items-center">
+                <div class="space-y-6 text-sm">
+                    <div class="flex items-start gap-4">
+                        <i class="fas fa-map-marker-alt text-emerald-400 text-xl mt-1"></i>
+                        <div>
+                            <h3 class="font-bold text-white mb-0.5" data-i18n="contact_address_label">Dirección</h3>
+                            <p class="text-slate-300">Gran Via Fontpineda s/n<br>08753 Pallejà (Barcelona)</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <i class="fas fa-phone-alt text-emerald-400 text-xl mt-1"></i>
+                        <div>
+                            <h3 class="font-bold text-white mb-0.5" data-i18n="contact_phone_label">Teléfono</h3>
+                            <p class="text-slate-300">936 880 209</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <i class="fab fa-whatsapp text-emerald-400 text-xl mt-1"></i>
+                        <div>
+                            <h3 class="font-bold text-white mb-0.5">WhatsApp</h3>
+                            <a href="https://wa.me/34619213304" target="_blank" class="text-emerald-400 hover:text-emerald-300 font-semibold underline">
+                                +34 619 21 33 04
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center border-t md:border-t-0 md:border-l border-slate-700 pt-6 md:pt-0 md:pl-8">
+                    <img src="assets/logo.png" alt="Ace Sport Club" class="max-w-[140px] mx-auto bg-white p-3 rounded-2xl shadow-sm mb-4">
+                    <p class="text-xs text-slate-400">Ace Sport Club Pallejà</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-slate-400 py-8 text-center text-xs border-t border-slate-800">
+        <div class="max-w-4xl mx-auto px-4 space-y-3">
+            <div class="flex justify-center space-x-6 text-slate-400 font-medium">
+                <a href="privacy.html" class="hover:text-white transition" data-i18n="footer_privacy">Política de Privacidad</a>
+                <span>·</span>
+                <a href="terms.html" class="hover:text-white transition" data-i18n="footer_terms">Términos y Condiciones</a>
+            </div>
+            <p>&copy; 2026 Ace Sport Club. <span data-i18n="footer_rights">Todos los derechos reservados.</span></p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
