@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Inscripción - Ace Sport Club</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .step-container { display: none; animation: fadeIn 0.35s ease-out; }
+        .step-container.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+        input[type='radio']:checked + div { outline: 2px solid #22c55e; outline-offset: -2px; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased font-sans flex flex-col min-h-screen">
+    <header class="bg-white shadow-sm py-4 sticky top-0 z-50">
+        <div class="container mx-auto px-4 flex justify-between items-center max-w-3xl">
+            <a href="app.html" class="flex items-center gap-2">
+                <img src="assets/logo.png" alt="Ace Sport Club" class="h-10">
+                <span class="font-bold text-xl text-[#1e3a5f]">Ace Sport Club</span>
+            </a>
+            <a href="app.html" class="text-gray-500 hover:text-[#1e3a5f] font-medium text-sm flex items-center gap-1">
+                <i class="fas fa-times"></i> Cancelar
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-3xl">
+        <!-- Progress Bar -->
+        <div class="mb-8 relative">
+            <div class="overflow-hidden h-2 mb-3 text-xs flex rounded bg-gray-200">
+                <div id="progressBar" style="width: 33%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-500 transition-all duration-500"></div>
+            </div>
+            <div class="flex justify-between text-xs font-bold text-gray-400" id="stepIndicators">
+                <span class="text-green-600">1. Cuenta</span>
+                <span>2. Elegir Tarifa</span>
+                <span>3. Confirmación</span>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-3xl shadow-lg p-6 md:p-10 border border-gray-100">
+            <form id="joinForm" onsubmit="return false;">
+                
+                <!-- STEP 1: Account Creation -->
+                <div id="step1" class="step-container active space-y-6">
+                    <div class="border-b pb-4">
+                        <h2 class="text-2xl font-bold text-[#1e3a5f] flex items-center gap-2">
+                            <i class="fas fa-user-circle text-blue-500"></i> Crea tu cuenta del Club
+                        </h2>
+                        <p class="text-gray-500 text-sm mt-1">Con esta cuenta podrás acceder a la App y gestionar tus reservas y abonos.</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Nombre Completo</label>
+                            <input type="text" id="fullName" required placeholder="Ej. Carlos García" class="w-full rounded-xl border border-gray-300 p-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">NIF / DNI</label>
+                            <input type="text" id="dni" required placeholder="Ej. 12345678Z" class="w-full rounded-xl border border-gray-300 p-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Email</label>
+                            <input type="email" id="emailInput" required placeholder="tu@email.com" class="w-full rounded-xl border border-gray-300 p-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Contraseña</label>
+                            <div class="relative">
+                                <input type="password" id="passwordInput" required placeholder="••••••••" class="w-full rounded-xl border border-gray-300 p-3 pr-10 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                                <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-3 text-gray-400 hover:text-gray-600 focus:outline-none text-sm">
+                                    <i id="togglePwdIcon" class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Password strength & live checklist indicators -->
+                    <div class="bg-gray-50 border border-gray-200 rounded-2xl p-4 space-y-2">
+                        <div class="flex justify-between items-center text-xs font-bold mb-1">
+                            <span class="text-gray-600">Requisitos de la contraseña:</span>
+                            <span id="pwdStrengthLabel" class="text-gray-400">Sin ingresar</span>
+                        </div>
+                        <!-- Strength bar -->
+                        <div class="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
+                            <div id="pwdStrengthBar" class="h-full w-0 bg-red-500 transition-all duration-300"></div>
+                        </div>
+                        <!-- Check items grid -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-xs text-gray-500">
+                            <div id="rule-length" class="flex items-center gap-2">
+                                <i class="fas fa-times-circle text-gray-300"></i>
+                                <span>Mínimo 8 caracteres</span>
+                            </div>
+                            <div id="rule-upper" class="flex items-center gap-2">
+                                <i class="fas fa-times-circle text-gray-300"></i>
+                                <span>Al menos 1 mayúscula (A-Z)</span>
+                            </div>
+                            <div id="rule-number" class="flex items-center gap-2">
+                                <i class="fas fa-times-circle text-gray-300"></i>
+                                <span>Al menos 1 número (0-9)</span>
+                            </div>
+                            <div id="rule-special" class="flex items-center gap-2">
+                                <i class="fas fa-times-circle text-gray-300"></i>
+                                <span>1 carácter especial (@$!%*?&amp;#...)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="authError" class="text-red-500 text-sm hidden font-medium"></div>
+
+                    <div class="pt-4 flex justify-between items-center">
+                        <a href="app.html" class="text-gray-400 text-sm hover:underline">Volver a la App</a>
+                        <button type="button" onclick="goToStep2()" id="btnStep1" class="px-8 py-3 bg-[#1e3a5f] hover:bg-blue-900 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-xl transition shadow flex items-center gap-2">
+                            <span>Siguiente Paso</span> <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 2: Plan Selection (Includes Free Plan Option) -->
+                <div id="step2" class="step-container space-y-6">
+                    <div class="border-b pb-4">
+                        <h2 class="text-2xl font-bold text-[#1e3a5f] flex items-center gap-2">
+                            <i class="fas fa-id-card text-green-500"></i> Elige tu Plan o Abono
+                        </h2>
+                        <p class="text-gray-500 text-sm mt-1">Puedes elegir el <strong>Plan Gratuito</strong> para empezar sin coste, o una tarifa de abonado para disfrutar de ventajas y pistas a 0€.</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 max-h-[55vh] overflow-y-auto pr-1">
+                        
+                        <!-- 0. PLAN GRATUITO -->
+                        <label class="cursor-pointer sm:col-span-2">
+                            <input type="radio" name="membership" value="gratuito" class="sr-only peer" checked>
+                            <div class="peer-checked:outline peer-checked:outline-2 peer-checked:outline-green-500 border-2 border-green-300 rounded-2xl p-4 hover:border-green-400 transition relative bg-green-50/70">
+                                <div class="absolute top-3 right-3 bg-green-600 text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full tracking-wider uppercase">Recomendado Inicio</div>
+                                <div class="font-extrabold text-lg text-green-900 flex items-center gap-2">
+                                    <i class="fas fa-gift text-green-600"></i> Plan Gratuito
+                                </div>
+                                <div class="text-2xl font-black text-green-700 my-1">0€ <span class="text-xs font-normal text-gray-500">/mes (Sin matrícula)</span></div>
+                                <p class="text-xs text-gray-600">Acceso a la App, consulta de disponibilidad y reservas con tarifas generales. Puedes pasarte a un abono en cualquier momento.</p>
+                            </div>
+                        </label>
+
+                        <!-- 1. Abonado Adulto -->
+                        <label class="cursor-pointer">
+                            <input type="radio" name="membership" value="adulto" class="sr-only peer">
+                            <div class="peer-checked:outline peer-checked:outline-2 peer-checked:outline-green-500 border rounded-2xl p-4 hover:border-green-400 transition relative bg-white">
+                                <div class="font-bold text-base text-gray-800">Abonado Adulto</div>
+                                <div class="text-2xl font-black text-[#1e3a5f] my-1">60€<span class="text-xs font-normal text-gray-500">/mes</span></div>
+                                <p class="text-xs text-gray-500">Tenis, pádel y club completo. Matrícula: 120€.</p>
+                            </div>
+                        </label>
+
+                        <!-- 2. Abonado Pádel -->
+                        <label class="cursor-pointer">
+                            <input type="radio" name="membership" value="padel" class="sr-only peer">
+                            <div class="peer-checked:outline peer-checked:outline-2 peer-checked:outline-green-500 border rounded-2xl p-4 hover:border-green-400 transition relative bg-white">
+                                <div class="font-bold text-base text-gray-800">Abonado Pádel</div>
+                                <div class="text-2xl font-black text-[#1e3a5f] my-1">56€<span class="text-xs font-normal text-gray-500">/mes</span></div>
+                                <p class="text-xs text-gray-500">Acceso a las 11 pistas de pádel a 0€. Matrícula: 112€.</p>
+                            </div>
+                        </label>
+
+                        <!-- 3. Abonado Gym -->
+                        <label class="cursor-pointer">
+                            <input type="radio" name="membership" value="gym" class="sr-only peer">
+                            <div class="peer-checked:outline peer-checked:outline-2 peer-checked:outline-green-500 border rounded-2xl p-4 hover:border-green-400 transition relative bg-white">
+                                <div class="font-bold text-base text-gray-800">Abonado Gym</div>
+                                <div class="text-2xl font-black text-[#1e3a5f] my-1">39€<span class="text-xs font-normal text-gray-500">/mes</span></div>
+                                <p class="text-xs text-gray-500">Acceso completo al gimnasio y máquinas. Matrícula: 78€.</p>
+                            </div>
+                        </label>
+
+                        <!-- 4. Gym + Clases -->
+                        <label class="cursor-pointer">
+                            <input type="radio" name="membership" value="gym_clases" class="sr-only peer">
+                            <div class="peer-checked:outline peer-checked:outline-2 peer-checked:outline-green-500 border rounded-2xl p-4 hover:border-green-400 transition relative bg-white">
+                                <div class="font-bold text-base text-gray-800">Gym + Clases Ilimitadas</div>
+                                <div class="text-2xl font-black text-[#1e3a5f] my-1">60€<span class="text-xs font-normal text-gray-500">/mes</span></div>
+                                <p class="text-xs text-gray-500">Gimnasio y todas las clases dirigidas. Matrícula: 120€.</p>
+                            </div>
+                        </label>
+
+                        <!-- 5. Clases 2h/sem -->
+                        <label class="cursor-pointer">
+                            <input type="radio" name="membership" value="clases_2horas" class="sr-only peer">
+                            <div class="peer-checked:outline peer-checked:outline-2 peer-checked:outline-green-500 border rounded-2xl p-4 hover:border-green-400 transition relative bg-white">
+                                <div class="font-bold text-base text-gray-800">Clases Dirigidas 2h/sem</div>
+                                <div class="text-2xl font-black text-[#1e3a5f] my-1">35€<span class="text-xs font-normal text-gray-500">/mes</span></div>
+                                <p class="text-xs text-gray-500">2 horas semanales en Sala 1 o Sala 2. Matrícula: 70€.</p>
+                            </div>
+                        </label>
+
+                        <!-- 6. Clases Ilimitadas -->
+                        <label class="cursor-pointer">
+                            <input type="radio" name="membership" value="clases_ilimitado" class="sr-only peer">
+                            <div class="peer-checked:outline peer-checked:outline-2 peer-checked:outline-green-500 border rounded-2xl p-4 hover:border-green-400 transition relative bg-white">
+                                <div class="font-bold text-base text-gray-800">Clases Dirigidas Ilimitadas</div>
+                                <div class="text-2xl font-black text-[#1e3a5f] my-1">45€<span class="text-xs font-normal text-gray-500">/mes</span></div>
+                                <p class="text-xs text-gray-500">Todas las sesiones dirigidas sin límite. Matrícula: 90€.</p>
+                            </div>
+                        </label>
+
+                        <!-- 7. Completo + Dirigidas -->
+                        <label class="cursor-pointer sm:col-span-2">
+                            <input type="radio" name="membership" value="completo_dirigidas_ilimitadas" class="sr-only peer">
+                            <div class="peer-checked:outline peer-checked:outline-2 peer-checked:outline-green-500 border rounded-2xl p-4 hover:border-green-400 transition relative bg-gray-900 text-white shadow-md">
+                                <div class="absolute top-3 right-3 bg-green-500 text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase">Todo Incluido</div>
+                                <div class="font-bold text-lg text-white">Completo + Dirigidas Ilimitadas</div>
+                                <div class="text-2xl font-black text-green-400 my-1">85€<span class="text-xs font-normal text-gray-400">/mes</span></div>
+                                <p class="text-xs text-gray-400">Tenis, pádel, gimnasio, piscina y todas las clases dirigidas. Matrícula: 170€.</p>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="pt-4 flex justify-between items-center border-t">
+                        <button type="button" onclick="showStep(1)" class="px-5 py-2.5 text-gray-500 font-bold hover:text-gray-800 text-sm">
+                            <i class="fas fa-arrow-left mr-1"></i> Atrás
+                        </button>
+                        <button type="button" onclick="goToStep3()" class="px-8 py-3 bg-[#1e3a5f] hover:bg-blue-900 text-white font-bold rounded-xl transition shadow flex items-center gap-2">
+                            <span>Continuar</span> <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 3: Normativas y Finalización -->
+                <div id="step3" class="step-container space-y-6">
+                    <div class="border-b pb-4">
+                        <h2 class="text-2xl font-bold text-[#1e3a5f] flex items-center gap-2">
+                            <i class="fas fa-file-contract text-orange-500"></i> Políticas y Confirmación
+                        </h2>
+                        <p class="text-gray-500 text-sm mt-1" id="step3Subtitle">Último paso para activar tu cuenta.</p>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <label class="flex items-start gap-3 p-3.5 bg-gray-50 rounded-2xl border border-gray-200 cursor-pointer hover:border-gray-300 transition">
+                            <input type="checkbox" id="checkRules" class="mt-1 h-5 w-5 text-blue-600 rounded">
+                            <span class="text-xs text-gray-600 leading-relaxed">
+                                He leído y acepto la normativa de uso del club y los 
+                                <a href="terms.html" target="_blank" class="text-blue-600 font-bold underline hover:text-blue-800">Términos y Condiciones</a> 
+                                de Ace Sport Club.
+                            </span>
+                        </label>
+                        <label class="flex items-start gap-3 p-3.5 bg-gray-50 rounded-2xl border border-gray-200 cursor-pointer hover:border-gray-300 transition">
+                            <input type="checkbox" id="checkData" class="mt-1 h-5 w-5 text-blue-600 rounded">
+                            <span class="text-xs text-gray-600 leading-relaxed">
+                                Autorizo el tratamiento de mis datos personales según el RGPD y la 
+                                <a href="privacy.html" target="_blank" class="text-blue-600 font-bold underline hover:text-blue-800">Política de Privacidad</a> 
+                                del Club.
+                            </span>
+                        </label>
+                    </div>
+
+                    <div id="legalError" class="text-red-500 text-sm hidden font-medium">Debes aceptar ambas casillas para continuar.</div>
+
+                    <!-- Selected Plan Summary Card -->
+                    <div id="planSummary" class="bg-blue-50/70 rounded-2xl p-5 border border-blue-200"></div>
+
+                    <div class="pt-4 border-t flex flex-col md:flex-row justify-between items-center gap-4">
+                        <button type="button" onclick="showStep(2)" class="text-gray-500 font-bold hover:text-gray-800 text-sm order-2 md:order-1">
+                            <i class="fas fa-arrow-left mr-1"></i> Cambiar Tarifa
+                        </button>
+                        <button type="button" onclick="processCheckout()" id="checkoutBtn" class="w-full md:w-auto px-10 py-4 font-bold text-base rounded-full transition shadow-lg flex items-center justify-center gap-2 order-1 md:order-2">
+                            <span id="checkoutBtnText">Confirmar y Entrar</span>
+                        </button>
+                    </div>
+                    <p id="stripeNote" class="text-xs text-gray-400 text-right md:pr-4 hidden">
+                        <i class="fab fa-stripe text-xl align-middle mr-1"></i> Pagos seguros cifrados con Stripe (Apple Pay, Tarjeta, etc.)
+                    </p>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="app.js"></script>
+    <script>
+        let newlyCreatedUserId = null;
+
+        const planInfo = {
+            gratuito: { label: 'Plan Gratuito', price: 0, registration: 0, isFree: true },
+            adulto: { label: 'Abonado Adulto', price: 60, registration: 120, isFree: false },
+            padel: { label: 'Abonado Pádel', price: 56, registration: 112, isFree: false },
+            gym: { label: 'Abonado Gym', price: 39, registration: 78, isFree: false },
+            gym_clases: { label: 'Gym + Clases Ilimitadas', price: 60, registration: 120, isFree: false },
+            clases_2horas: { label: 'Clases Dirigidas 2h/sem', price: 35, registration: 70, isFree: false },
+            clases_ilimitado: { label: 'Clases Dirigidas Ilimitadas', price: 45, registration: 90, isFree: false },
+            completo_dirigidas_ilimitadas: { label: 'Completo + Dirigidas Ilimitadas', price: 85, registration: 170, isFree: false }
+        };
+
+        function showStep(stepNum) {
+            document.querySelectorAll('.step-container').forEach(el => el.classList.remove('active'));
+            document.getElementById('step' + stepNum).classList.add('active');
+            
+            const progress = stepNum === 1 ? '33%' : (stepNum === 2 ? '66%' : '100%');
+            document.getElementById('progressBar').style.width = progress;
+
+            const indicators = document.getElementById('stepIndicators').children;
+            for (let i = 0; i < 3; i++) {
+                indicators[i].className = i < stepNum ? 'text-green-600' : 'text-gray-400';
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Password Criteria Evaluation Logic
+        const passwordInput = document.getElementById('passwordInput');
+        let isPasswordValid = false;
+
+        function checkPasswordCriteria(pwd) {
+            const hasLength = pwd.length >= 8;
+            const hasUpper = /[A-Z]/.test(pwd);
+            const hasNumber = /[0-9]/.test(pwd);
+            const hasSpecial = /[^A-Za-z0-9]/.test(pwd);
+
+            updateRuleUI('rule-length', hasLength);
+            updateRuleUI('rule-upper', hasUpper);
+            updateRuleUI('rule-number', hasNumber);
+            updateRuleUI('rule-special', hasSpecial);
+
+            const score = (hasLength ? 1 : 0) + (hasUpper ? 1 : 0) + (hasNumber ? 1 : 0) + (hasSpecial ? 1 : 0);
+            const bar = document.getElementById('pwdStrengthBar');
+            const label = document.getElementById('pwdStrengthLabel');
+
+            if (pwd.length === 0) {
+                bar.style.width = '0%';
+                bar.className = 'h-full w-0 bg-gray-300 transition-all duration-300';
+                label.textContent = 'Sin ingresar';
+                label.className = 'text-gray-400 font-bold';
+            } else if (score <= 1) {
+                bar.style.width = '25%';
+                bar.className = 'h-full bg-red-500 transition-all duration-300';
+                label.textContent = 'Muy débil';
+                label.className = 'text-red-500 font-bold';
+            } else if (score === 2) {
+                bar.style.width = '50%';
+                bar.className = 'h-full bg-yellow-500 transition-all duration-300';
+                label.textContent = 'Débil';
+                label.className = 'text-yellow-500 font-bold';
+            } else if (score === 3) {
+                bar.style.width = '75%';
+                bar.className = 'h-full bg-blue-500 transition-all duration-300';
+                label.textContent = 'Aceptable';
+                label.className = 'text-blue-500 font-bold';
+            } else {
+                bar.style.width = '100%';
+                bar.className = 'h-full bg-green-500 transition-all duration-300';
+                label.textContent = 'Excelente y segura';
+                label.className = 'text-green-600 font-bold';
+            }
+
+            isPasswordValid = hasLength && hasUpper && hasNumber && hasSpecial;
+            return isPasswordValid;
+        }
+
+        function updateRuleUI(elementId, passed) {
+            const el = document.getElementById(elementId);
+            if (!el) return;
+            const icon = el.querySelector('i');
+            if (passed) {
+                icon.className = 'fas fa-check-circle text-green-500';
+                el.classList.add('text-green-700', 'font-semibold');
+                el.classList.remove('text-gray-500');
+            } else {
+                icon.className = 'fas fa-times-circle text-gray-300';
+                el.classList.remove('text-green-700', 'font-semibold');
+                el.classList.add('text-gray-500');
+            }
+        }
+
+        if (passwordInput) {
+            passwordInput.addEventListener('input', (e) => {
+                checkPasswordCriteria(e.target.value);
+            });
+        }
+
+        function togglePasswordVisibility() {
+            const pwdInput = document.getElementById('passwordInput');
+            const icon = document.getElementById('togglePwdIcon');
+            if (pwdInput.type === 'password') {
+                pwdInput.type = 'text';
+                icon.className = 'fas fa-eye-slash';
+            } else {
+                pwdInput.type = 'password';
+                icon.className = 'fas fa-eye';
+            }
+        }
+
+        async function goToStep2() {
+            const email = document.getElementById('emailInput').value.trim();
+            const password = document.getElementById('passwordInput').value;
+            const fullName = document.getElementById('fullName').value.trim();
+            const dni = document.getElementById('dni').value.trim();
+
+            if (!email || !password || !fullName || !dni) {
+                alert('Por favor completa todos los campos.');
+                return;
+            }
+
+            if (!checkPasswordCriteria(password)) {
+                const errDiv = document.getElementById('authError');
+                errDiv.textContent = 'La contraseña no cumple con todos los requisitos mínimos (8 caracteres, mayúscula, número y carácter especial).';
+                errDiv.classList.remove('hidden');
+                document.getElementById('passwordInput').focus();
+                return;
+            }
+
+            const btn = document.getElementById('btnStep1');
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Creando cuenta...';
+            btn.disabled = true;
+
+            const { data, error } = await supabaseClient.auth.signUp({
+                email: email,
+                password: password,
+                options: {
+                    data: { full_name: fullName, dni: dni }
+                }
+            });
+
+            btn.innerHTML = '<span>Siguiente Paso</span> <i class="fas fa-arrow-right"></i>';
+            btn.disabled = false;
+
+            if (error) {
+                const errDiv = document.getElementById('authError');
+                errDiv.textContent = error.message;
+                errDiv.classList.remove('hidden');
+            } else {
+                newlyCreatedUserId = data.user.id;
+                document.getElementById('authError').classList.add('hidden');
+                showStep(2);
+            }
+        }
+
+        function goToStep3() {
+            const membership = document.querySelector('input[name="membership"]:checked').value;
+            const info = planInfo[membership];
+            const summaryEl = document.getElementById('planSummary');
+            const btn = document.getElementById('checkoutBtn');
+            const btnText = document.getElementById('checkoutBtnText');
+            const stripeNote = document.getElementById('stripeNote');
+
+            if (info.isFree) {
+                summaryEl.innerHTML = `
+                    <div class="text-center py-2">
+                        <div class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-2 text-xl">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <h3 class="font-extrabold text-base text-gray-800">${info.label}</h3>
+                        <p class="text-3xl font-black text-green-600 my-1">0€</p>
+                        <p class="text-xs text-gray-500">Sin matrícula · Sin tarjeta · Acceso inmediato a la App</p>
+                    </div>
+                `;
+                btnText.textContent = 'Activar Plan Gratuito y Entrar';
+                btn.className = 'w-full md:w-auto px-10 py-4 bg-green-500 hover:bg-green-600 text-white font-bold text-base rounded-full transition shadow-lg flex items-center justify-center gap-2 order-1 md:order-2';
+                stripeNote.classList.add('hidden');
+            } else {
+                summaryEl.innerHTML = `
+                    <div class="text-center py-2">
+                        <h3 class="font-extrabold text-base text-gray-800">${info.label}</h3>
+                        <p class="text-3xl font-black text-[#1e3a5f] my-1">${info.price}€<span class="text-xs font-normal text-gray-500">/mes</span></p>
+                        <p class="text-xs text-gray-600">Matrícula inicial (pago único equivalente a 2 meses): <strong>${info.registration}€</strong></p>
+                        <p class="text-[11px] text-gray-400 mt-2">Acceso a pasarela segura de Stripe (tarjeta, Apple Pay, etc.)</p>
+                    </div>
+                `;
+                btnText.textContent = 'Pagar con Stripe';
+                btn.className = 'w-full md:w-auto px-10 py-4 bg-[#635bff] hover:bg-[#5349e0] text-white font-bold text-base rounded-full transition shadow-lg flex items-center justify-center gap-2 order-1 md:order-2';
+                stripeNote.classList.remove('hidden');
+            }
+            showStep(3);
+        }
+
+        async function processCheckout() {
+            if (!document.getElementById('checkRules').checked || !document.getElementById('checkData').checked) {
+                document.getElementById('legalError').classList.remove('hidden');
+                return;
+            }
+            document.getElementById('legalError').classList.add('hidden');
+
+            const btn = document.getElementById('checkoutBtn');
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Procesando...';
+            btn.disabled = true;
+
+            const membership = document.querySelector('input[name="membership"]:checked').value;
+
+            // Plan Gratuito: direct profile update in Supabase, then redirect to app
+            if (membership === 'gratuito') {
+                try {
+                    await supabaseClient
+                        .from('profiles')
+                        .update({ membership_type: 'gratuito', subscription_status: 'active' })
+                        .eq('id', newlyCreatedUserId);
+
+                    window.location.href = 'app.html';
+                } catch (err) {
+                    console.error("Free plan update error:", err);
+                    window.location.href = 'app.html';
+                }
+                return;
+            }
+
+            // Paid membership: create Stripe session via Vercel endpoint
+            try {
+                const response = await fetch('/api/create-checkout-session', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        membership: membership,
+                        userId: newlyCreatedUserId
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.url) {
+                        window.location.href = data.url;
+                    }
+                } else {
+                    alert('Error conectando con la pasarela Stripe. Comprueba que las claves estén configuradas en Vercel.');
+                    btn.innerHTML = '<span>Pagar con Stripe</span>';
+                    btn.disabled = false;
+                }
+            } catch (error) {
+                console.error(error);
+                alert('No se pudo conectar con el servidor.');
+                btn.innerHTML = '<span>Pagar con Stripe</span>';
+                btn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>

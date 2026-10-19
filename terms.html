@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Términos y Condiciones - Ace Sport Club</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col justify-between">
+
+    <!-- Header -->
+    <header class="bg-[#1e3a5f] text-white py-4 shadow-md sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3">
+                <img src="assets/logo.png" alt="Ace Sport Club" class="h-10 bg-white rounded-full p-1 shadow">
+                <span class="font-extrabold text-xl tracking-tight">Ace Sport Club</span>
+            </a>
+            <div class="flex items-center gap-3">
+                <a href="index.html" class="text-xs text-blue-200 hover:text-white transition hidden sm:inline">
+                    <i class="fas fa-arrow-left mr-1"></i> Volver a la Web
+                </a>
+                <a href="app.html" class="bg-green-500 hover:bg-green-600 text-white font-bold text-xs px-4 py-2 rounded-full transition shadow flex items-center gap-1.5">
+                    <i class="fas fa-mobile-alt"></i> <span>Abrir App</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content -->
+    <main class="max-w-4xl mx-auto px-4 py-10 my-4 flex-grow">
+        <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-lg border border-gray-100">
+            
+            <div class="border-b border-gray-100 pb-6 mb-8">
+                <span class="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-3 py-1 rounded-full">Normativa Oficial</span>
+                <h1 class="text-3xl sm:text-4xl font-black text-gray-900 mt-3">Términos y Condiciones</h1>
+                <p class="text-xs text-gray-400 mt-2">Ace Sport Club · Pallejà (Barcelona) · Versión vigente 2026</p>
+            </div>
+
+            <div class="prose max-w-none text-gray-700 space-y-6 text-sm leading-relaxed">
+                
+                <section>
+                    <h2 class="text-lg font-bold text-[#1e3a5f] flex items-center gap-2">
+                        <i class="fas fa-info-circle text-blue-500"></i> 1. Información General y Objeto
+                    </h2>
+                    <p class="mt-2">
+                        Las presentes Condiciones Generales regulan el acceso, suscripción, reserva de pistas y uso de las instalaciones deportivas de <strong>Ace Sport Club</strong> (Gran Via Fontpineda s/n, 08753 Pallejà), tanto a través de su sitio web oficial como de su aplicación móvil (PWA). El registro como usuario o abonado implica la aceptación plena de este documento.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 class="text-lg font-bold text-[#1e3a5f] flex items-center gap-2">
+                        <i class="fas fa-id-card text-green-500"></i> 2. Tipos de Planes, Cuotas y Matrícula
+                    </h2>
+                    <p class="mt-2">El club ofrece diversas modalidades de membresía y acceso:</p>
+                    <ul class="list-disc list-inside mt-2 space-y-2 pl-2">
+                        <li><strong>Plan Gratuito:</strong> Permite registrarse en el club sin cuota mensual ni matrícula de acceso. Los usuarios en Plan Gratuito abonan las tarifas estándar por alquiler de pistas (12€ pádel, 15€ tenis) o clases individuales.</li>
+                        <li><strong>Abonos Mensuales (Adulto, Pádel, Gym, Gym + Clases, Clases 2h, Clases Ilimitadas, Completo):</strong> Dan derecho al uso de las instalaciones correspondientes a su modalidad a <strong>0€ de coste añadido</strong> en las franjas horarias y actividades cubiertas.</li>
+                        <li><strong>Matrícula Inicial:</strong> Toda alta en un abono de pago devenga una matrícula inicial obligatoria equivalente a <strong>dos mensualidades</strong> de la cuota seleccionada, cobrada una única vez al formalizar el alta.</li>
+                        <li><strong>Niños menores de 8 años:</strong> Se incluyen en el fichero del club sin suplemento, asociados al abono del tutor legal.</li>
+                        <li><strong>Incremento de clases dirigidas familiares:</strong> Las clases dirigidas ilimitadas en modalidad familiar tienen un suplemento regulatorio de 15€ por miembro.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="text-lg font-bold text-[#1e3a5f] flex items-center gap-2">
+                        <i class="fas fa-credit-card text-purple-500"></i> 3. Pasarela de Pago y Renovación
+                    </h2>
+                    <p class="mt-2">
+                        Los pagos de abonos y matrículas se procesan con pasarelas de pago seguras (Stripe) compatibles con tarjetas de crédito/débito y monederos digitales (Apple Pay, Google Pay). Las cuotas mensuales son recurrentes y se cargan automáticamente cada mes salvo que el usuario solicite su baja o pausa con un preaviso mínimo de 5 días hábiles antes del cierre del ciclo de facturación.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 class="text-lg font-bold text-[#1e3a5f] flex items-center gap-2">
+                        <i class="fas fa-clock text-yellow-500"></i> 4. Horarios de Apertura y Reserva de Pistas
+                    </h2>
+                    <p class="mt-2">
+                        El horario de apertura del club para pistas de tenis, pádel, gimnasio y clases dirigidas es de <strong>Lunes a Viernes de 9:00 a 22:00</strong>, y <strong>Fines de Semana y Festivos de 9:00 a 21:00</strong>. Las reservas de pista se canalizan a través de la integración oficial con Playtomic y las clases dirigidas a través de BookyWay.
+                    </p>
+                    <p class="mt-1">
+                        Las cancelaciones de pista con derecho a reembolso o liberación de cuota deberán realizarse con la antelación mínima fijada por la normativa de reservas de la plataforma.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 class="text-lg font-bold text-[#1e3a5f] flex items-center gap-2">
+                        <i class="fas fa-shield-alt text-red-500"></i> 5. Normas de Convivencia e Instalaciones
+                    </h2>
+                    <ul class="list-disc list-inside mt-2 space-y-1.5 pl-2">
+                        <li>Es obligatorio el uso de calzado y vestimenta deportiva adecuada en pistas (zapatillas de tenis o pádel con suela limpia) y en sala de fitness (uso de toalla obligatorio en máquinas).</li>
+                        <li>Se debe respetar la integridad de las pistas, redes, cristales y material deportivo del club.</li>
+                        <li>El club se reserva el derecho de admisión y expulsión ante conductas antideportivas, inapropiadas o que perturben la tranquilidad de socios y visitantes.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="text-lg font-bold text-[#1e3a5f] flex items-center gap-2">
+                        <i class="fas fa-gavel text-gray-700"></i> 6. Legislación Aplicable y Fuero
+                    </h2>
+                    <p class="mt-2">
+                        Las relaciones entre el Club y los usuarios se rigen por la legislación española. Para cualquier controversia judicial derivada de la interpretación o ejecución de estas condiciones, ambas partes se someten a los juzgados y tribunales de la provincia de Barcelona.
+                    </p>
+                </section>
+
+            </div>
+
+            <div class="mt-10 pt-6 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <a href="privacy.html" class="text-sm font-semibold text-blue-600 hover:underline flex items-center gap-1.5">
+                    <i class="fas fa-user-shield"></i> <span>Ver Política de Privacidad</span>
+                </a>
+                <div class="flex gap-3">
+                    <a href="join.html" class="bg-green-500 hover:bg-green-600 text-white font-bold text-xs px-5 py-2.5 rounded-full transition shadow">
+                        Darse de Alta
+                    </a>
+                    <a href="index.html" class="bg-gray-800 hover:bg-gray-900 text-white font-bold text-xs px-5 py-2.5 rounded-full transition shadow">
+                        Volver a Inicio
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-6 text-center text-xs border-t border-gray-800">
+        <div class="max-w-4xl mx-auto px-4 space-y-2">
+            <p>&copy; 2026 Ace Sport Club. Gran Via Fontpineda s/n, 08753 Pallejà. Todos los derechos reservados.</p>
+            <div class="space-x-4">
+                <a href="privacy.html" class="hover:text-white transition">Política de Privacidad</a>
+                <span>·</span>
+                <a href="terms.html" class="text-green-400 font-bold hover:underline">Términos y Condiciones</a>
+                <span>·</span>
+                <a href="app.html" class="hover:text-white transition">App</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
